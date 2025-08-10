@@ -16,4 +16,26 @@ exports.registerUser=async(req,res)=>{
     } catch (error) {
         res.status(500).json({message:error.message});
     }
-}
+};
+
+
+exports.loginUser=async(req,res)=>{
+    try {
+        const {email,password}=req.body;
+        const user=await User.findOne({email});
+        if(!user)
+        {
+            return res.status(400).json({message:'Invalid Credentials'});
+        }
+        const isMatch=await bcrypt.compare(password,user.password);
+        if(!isMatch)
+        {
+            return res.status(400).json({message:'Invalid Credentials'});
+        }
+
+        const token=jwt.sign({ id:user._id , role:user.role },process.env.JWT_SECRET,{expireIn:'1d'});
+        res.json({message:'Login Succesful',token});
+    } catch (error) {
+        res.status(500).json({message:error.message})
+    }
+};
