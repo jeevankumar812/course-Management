@@ -7,7 +7,7 @@ module.exports=(req,res,next)=>{
         return res.status(400).json({message:'No Token , authorization denied'});
     }
     try {
-        const denied= jwt.verify(token,process.env.JWT_SECRET);
+        const decoded= jwt.verify(token,process.env.JWT_SECRET);
         req.user=decoded;
         next();
     } catch (error) {
