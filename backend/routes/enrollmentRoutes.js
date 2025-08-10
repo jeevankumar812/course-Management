@@ -1,6 +1,6 @@
 const auth = require("../middlewares/authMiddleware");
 const {enrollCourse, getMyEnrollements}=require('../controllers/enrollmentController');
-const express = rewuire('express');
+const express = require('express');
 
 const router=express.Router();
 
