@@ -9,3 +9,13 @@ exports.enrollCourse=async(req,res)=>{
         res.status(500).json({message:erro.message});
     }
 };
+
+exports.getMyEnrollements=async(req,res)=>{
+    try {
+        const enrollements= await Enrollment.find({student :req.user.id});
+        populate('course');
+        res.json(enrollements);
+    } catch (error) {
+        res.status(500).json({message:error.message});
+    }
+};
