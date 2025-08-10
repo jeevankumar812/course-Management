@@ -1,10 +1,9 @@
-const auth = require("../middlewares/authMiddleware");
-const {enrollCourse, getMyEnrollements}=require('../controllers/enrollmentController');
 const express = require('express');
+const { enrollCourse, getMyEnrollments } = require('../controllers/enrollmentController');
+const auth = require('../middlewares/auth');
+const router = express.Router();
 
-const router=express.Router();
+router.post('/', auth, enrollCourse);
+router.get('/my', auth, getMyEnrollments);
 
-router.post('/',auth,enrollCourse);
-router.post('/',auth,getMyEnrollements);
-
-module.exports=router;
+module.exports = router;
